@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+
+<project name="build-common-service">
+	<property name="project.dir" value="../.." />
+
+	<import file="../build-common-plugin.xml" />
+
+	<target name="build-service">
+		<antcall target="build-common-plugin.build-service">
+		</antcall>
+		
+		<copy file="docroot/WEB-INF/lib/${plugin.name}-service.jar" todir="${app.server.lib.global.dir}" />
+	</target>
+
+	<target name="deploy">
+		<copy file="docroot/WEB-INF/lib/${plugin.name}-service.jar" todir="${app.server.lib.global.dir}" />
+
+		<antcall target="build-common-plugin.deploy" />
+		
+	</target>
+
+	<target name="war" depends="compile">
+		<mkdir dir="${project.dir}/dist" />
+
+		<if>
+			<available file="tmp" />
+			<then>
+				<property name="docroot.dir" value="tmp" />
+			</then>
+			<else>
+				<property name="docroot.dir" value="docroot" />
+			</else>
+		</if>
+
+		<delete file="${plugin.file}" />
+
+		<antcall target="clean-portal-dependencies" />
+
+		<mkdir dir="docroot/WEB-INF/lib-ext" />
+
+		<copy file="docroot/WEB-INF/lib/${plugin.name}-service.jar" todir="docroot/WEB-INF/lib-ext" />
+
+		<if>
+			<contains string="${app.server.dir}" substring="glassfish" />
+			<then>
+				<zip
+					basedir="${docroot.dir}"
+					destfile="${plugin.file}"
+					excludes="**/META-INF/context.xml,**/WEB-INF/lib/${plugin.name}-service.jar"
+				/>
+			</then>
+		<else>
+				<zip
+					basedir="${docroot.dir}"
+					destfile="${plugin.file}"
+					excludes="**/WEB-INF/lib/${plugin.name}-service.jar"
+				/>
+			</else>
+		</if>
+	</target>
+
+</project>

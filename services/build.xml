@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+
+<project name="services" basedir="." default="deploy" xmlns:antelope="antlib:ise.antelope.tasks">
+	<property name="project.dir" value=".." />
+
+	<import file="../build-common-plugins.xml" />
+
+	<target name="create">
+		<if>
+			<or>
+				<not>
+					<isset property="service.name" />
+				</not>
+				<not>
+					<isset property="service.display.name" />
+				</not>
+			</or>
+			<then>
+				<echo message="This task must be called by create.bat." />
+			</then>
+			<else>
+				<if>
+					<not>
+						<isset property="service.parent.dir" />
+					</not>
+					<then>
+						<property name="service.parent.dir" value="${basedir}" />
+					</then>
+				</if>
+
+				<property name="service.dir" value="${service.parent.dir}/${service.name}-service" />
+
+				<if>
+					<available file="${service.dir}" />
+					<then>
+						<fail message="${service.dir} already exists." />
+					</then>
+				</if>
+
+				<copy todir="${service.dir}">
+					<fileset
+						dir="${project.dir}/tools/service_tmpl"
+					/>
+				</copy>
+
+				<antelope:stringutil string="${service.display.name}" property="service.java.class.name">
+					<antelope:replace regex="\s+" replacement="" />
+					<antelope:trim />
+				</antelope:stringutil>
+
+				<antelope:stringutil string="${service.name}" property="service.java.package.name">
+					<antelope:replace regex="-" replacement="" />
+					<antelope:trim />
+				</antelope:stringutil>
+
+				<replace dir="${service.dir}">
+					<replacefilter token="@service.name@" value="${service.name}" />
+					<replacefilter token="@service.display.name@" value="${service.display.name}" />
+					<replacefilter token="@service.java.class.name@" value="${service.java.class.name}" />
+					<replacefilter token="@service.java.package.name@" value="${service.java.package.name}" />
+				</replace>
+
+			</else>
+		</if>
+	</target>
+</project>

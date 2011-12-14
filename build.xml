@@ -12,6 +12,7 @@
 	</target>
 
 	<target name="build-service">
+		<ant dir="services" target="build-service" inheritAll="false" />
 		<ant dir="portlets" target="build-service" inheritAll="false" />
 		<ant dir="webs" target="build-service" inheritAll="false" />
 	</target>
@@ -41,6 +42,7 @@
 	</target>
 
 	<target name="clean">
+		<ant dir="services" target="clean" inheritAll="false" />
 		<ant dir="hooks" target="clean" inheritAll="false" />
 		<ant dir="layouttpl" target="clean" inheritAll="false" />
 		<ant dir="portlets" target="clean" inheritAll="false" />
@@ -49,6 +51,7 @@
 	</target>
 
 	<target name="compile">
+		<ant dir="services" target="compile" inheritAll="false" />
 		<ant dir="hooks" target="compile" inheritAll="false" />
 		<ant dir="layouttpl" target="compile" inheritAll="false" />
 		<ant dir="portlets" target="compile" inheritAll="false" />
@@ -57,6 +60,7 @@
 	</target>
 
 	<target name="deploy">
+		<ant dir="services" target="deploy" inheritAll="false" />
 		<ant dir="hooks" target="deploy" inheritAll="false" />
 		<ant dir="layouttpl" target="deploy" inheritAll="false" />
 		<ant dir="portlets" target="deploy" inheritAll="false" />
@@ -65,6 +69,7 @@
 	</target>
 
 	<target name="direct-deploy">
+		<ant dir="services" target="direct-deploy" inheritAll="false" />
 		<ant dir="hooks" target="direct-deploy" inheritAll="false" />
 		<ant dir="layouttpl" target="direct-deploy" inheritAll="false" />
 		<ant dir="portlets" target="direct-deploy" inheritAll="false" />
@@ -180,6 +185,7 @@
 	</target>
 
 	<target name="format-javadoc">
+		<ant dir="services" target="format-javadoc" inheritAll="false" />
 		<ant dir="hooks" target="format-javadoc" inheritAll="false" />
 		<ant dir="layouttpl" target="format-javadoc" inheritAll="false" />
 		<ant dir="portlets" target="format-javadoc" inheritAll="false" />
@@ -188,20 +194,24 @@
 	</target>
 
 	<target name="setup-eclipse">
+		<ant dir="services" target="clean" inheritAll="false" />
 		<ant dir="hooks" target="clean" inheritAll="false" />
 		<ant dir="portlets" target="clean" inheritAll="false" />
 		<ant dir="webs" target="clean" inheritAll="false" />
 
+		<ant dir="services" target="compile" inheritAll="false" />
 		<ant dir="hooks" target="compile" inheritAll="false" />
 		<ant dir="portlets" target="compile" inheritAll="false" />
 		<ant dir="webs" target="compile" inheritAll="false" />
 
+		<ant dir="services" target="setup-eclipse" inheritAll="false" />
 		<ant dir="hooks" target="setup-eclipse" inheritAll="false" />
 		<ant dir="portlets" target="setup-eclipse" inheritAll="false" />
 		<ant dir="webs" target="setup-eclipse" inheritAll="false" />
 	</target>
 
 	<target name="war">
+		<ant dir="services" target="war" inheritAll="false" />
 		<ant dir="hooks" target="war" inheritAll="false" />
 		<ant dir="layouttpl" target="war" inheritAll="false" />
 		<ant dir="portlets" target="war" inheritAll="false" />
