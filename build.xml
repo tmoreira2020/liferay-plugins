@@ -11,6 +11,13 @@
 		<antcall target="deploy" />
 	</target>
 
+	<target name="build-diffs">
+		<java classname="com.liferay.portal.tools.UpgradeDiffer" classpathref="portal.classpath" fork="true" newenvironment="true">
+			<arg value="${basedir}" />
+			<arg value="${source.zip}" />
+		</java>
+	</target>
+
 	<target name="build-service">
 		<ant dir="portlets" target="build-service" inheritAll="false" />
 		<ant dir="webs" target="build-service" inheritAll="false" />
